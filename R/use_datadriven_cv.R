@@ -60,15 +60,14 @@ use_datadriven_cv <- function(full_name = "Sarah Arcos",
                               output_dir = getwd(),
                               create_output_dir = FALSE,
                               use_network_logo = TRUE,
-                              open_files = TRUE){
-
-  if(is.character(which_files) && which_files == "all"){
+                              open_files = TRUE) {
+  if (is.character(which_files) && which_files == "all") {
     which_files <- c("cv.rmd", "dd_cv.css", "render_cv.r", "cv_printing_functions.r")
   }
   # Make case-insensitive
   which_files <- tolower(which_files)
 
-  if("cv.rmd" %in% which_files){
+  if ("cv.rmd" %in% which_files) {
     # Sets the main Rmd template
     use_ddcv_template(
       file_name = "cv.rmd",
@@ -86,7 +85,7 @@ use_datadriven_cv <- function(full_name = "Sarah Arcos",
     )
   }
 
-  if("dd_cv.css" %in% which_files){
+  if ("dd_cv.css" %in% which_files) {
     # Place the css as well
     use_ddcv_template(
       file_name = "dd_cv.css",
@@ -95,7 +94,7 @@ use_datadriven_cv <- function(full_name = "Sarah Arcos",
     )
   }
 
-  if("render_cv.r" %in% which_files){
+  if ("render_cv.r" %in% which_files) {
     use_ddcv_template(
       file_name = "render_cv.r",
       output_dir = output_dir,
@@ -104,12 +103,11 @@ use_datadriven_cv <- function(full_name = "Sarah Arcos",
     )
   }
 
-  if("cv_printing_functions.r" %in% which_files){
+  if ("cv_printing_functions.r" %in% which_files) {
     use_ddcv_template(
       file_name = "cv_printing_functions.r",
       output_dir = output_dir,
       create_output_dir
     )
   }
-
 }

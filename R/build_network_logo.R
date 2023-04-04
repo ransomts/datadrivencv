@@ -8,20 +8,21 @@
 #'
 #' @return Interactive force-directed layout network of your CV data
 #' @export
-build_network_logo <- function(position_data){
-
+build_network_logo <- function(position_data) {
   positions <- position_data %>%
     dplyr::mutate(
       id = dplyr::row_number(),
-      title = stringr::str_remove_all(title, '(\\(.+?\\))|(\\[)|(\\])'),
+      title = stringr::str_remove_all(title, "(\\(.+?\\))|(\\[)|(\\])"),
       section = stringr::str_replace_all(section, "_", " ") %>% stringr::str_to_title()
     )
 
-  combination_indices <- function(n){
+  combination_indices <- function(n) {
     rep_counts <- (n:1) - 1
     dplyr::tibble(
       a = rep(1:n, times = rep_counts),
-      b = purrr::flatten_int( purrr::map(rep_counts, ~{tail(1:n, .x)}) )
+      b = purrr::flatten_int(purrr::map(rep_counts, ~ {
+        tail(1:n, .x)
+      }))
     )
   }
   current_year <- lubridate::year(lubridate::ymd(Sys.Date()))
@@ -31,7 +32,7 @@ build_network_logo <- function(position_data){
       end_year = ifelse(end_year > current_year, current_year, end_year),
       start_year = ifelse(start_year > current_year, current_year, start_year)
     ) %>%
-    purrr::pmap_dfr(function(id, start_year, end_year){
+    purrr::pmap_dfr(function(id, start_year, end_year) {
       dplyr::tibble(
         year = start_year:end_year,
         id = id
@@ -40,7 +41,7 @@ build_network_logo <- function(position_data){
     dplyr::group_by(year) %>%
     tidyr::nest() %>%
     dplyr::rename(ids_for_year = data) %>%
-    purrr::pmap_dfr(function(year, ids_for_year){
+    purrr::pmap_dfr(function(year, ids_for_year) {
       combination_indices(nrow(ids_for_year)) %>%
         dplyr::transmute(
           year = year,
@@ -49,8 +50,10 @@ build_network_logo <- function(position_data){
         )
     })
 
-  network_data <- list(nodes = dplyr::select(positions, -in_resume,-timeline),
-                       edges = edges) %>%
+  network_data <- list(
+    nodes = dplyr::select(positions, -in_resume, -timeline),
+    edges = edges
+  ) %>%
     jsonlite::toJSON()
 
   viz_script <- readr::read_file(system.file("js/cv_network.js", package = "datadrivencv"))
@@ -65,5 +68,4 @@ build_network_logo <- function(position_data){
     "{viz_script}",
     "</script>"
   )
-
 }

@@ -1,5 +1,4 @@
 test_that("Addition of all files works", {
-
   # Make a temp directory for placing files
   temp_dir <- fs::dir_create(fs::path(tempdir(), "test_dir"))
 
@@ -19,7 +18,6 @@ test_that("Addition of all files works", {
 
 
 test_that("Addition of subset of files", {
-
   # Make a temp directory for placing files
   temp_dir <- fs::dir_create(fs::path(tempdir(), "test_dir"))
 
@@ -43,7 +41,6 @@ test_that("Addition of subset of files", {
 
 
 test_that("Warns when trying to update a file with no change", {
-
   # Make a temp directory for placing files
   temp_dir <- fs::dir_create(fs::path(tempdir(), "test_dir"))
 
@@ -87,7 +84,6 @@ test_that("Warns when trying to update a file with no change", {
 
 
 test_that("Addition of all data csvs works", {
-
   # Make a temp directory for placing files
   temp_dir <- fs::dir_create(fs::path(tempdir(), "test_dir"))
 
@@ -112,10 +108,9 @@ test_that("Addition of all data csvs works", {
   )
 
   expect_true(
-    all(c("entries.csv", "text_blocks.csv", "language_skills.csv","contact_info.csv" ) %in% list.files(fs::path(temp_dir, "csv_data")))
+    all(c("entries.csv", "text_blocks.csv", "language_skills.csv", "contact_info.csv") %in% list.files(fs::path(temp_dir, "csv_data")))
   )
 
   # Clean up temp dir
   fs::dir_walk(temp_dir, fs::file_delete)
 })
-

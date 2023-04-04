@@ -13,9 +13,11 @@ knitr::opts_chunk$set(
 
 embed_png <- function(image_title, width = "100%") {
   knitr::asis_output(
-    glue::glue("<div style=\"text-align: center; padding: 2rem 0;\">",
-                 "<img src=\"man/figures/{image_title}\" width={width} />",
-               "</div>")
+    glue::glue(
+      "<div style=\"text-align: center; padding: 2rem 0;\">",
+      "<img src=\"man/figures/{image_title}\" width={width} />",
+      "</div>"
+    )
   )
 }
 ```
@@ -161,18 +163,22 @@ Now that you have the templates setup and you've configured your data, the last 
 ```{r, eval = FALSE, echo = TRUE}
 # Knit the HTML version
 rmarkdown::render("cv.rmd",
-                  params = list(pdf_mode = FALSE),
-                  output_file = "cv.html")
+  params = list(pdf_mode = FALSE),
+  output_file = "cv.html"
+)
 
 # Knit the PDF version to temporary html location
 tmp_html_cv_loc <- fs::file_temp(ext = ".html")
 rmarkdown::render("cv.rmd",
-                  params = list(pdf_mode = TRUE),
-                  output_file = tmp_html_cv_loc)
+  params = list(pdf_mode = TRUE),
+  output_file = tmp_html_cv_loc
+)
 
 # Convert to PDF using Pagedown
-pagedown::chrome_print(input = tmp_html_cv_loc,
-                       output = "cv.pdf")
+pagedown::chrome_print(
+  input = tmp_html_cv_loc,
+  output = "cv.pdf"
+)
 ```
 
 

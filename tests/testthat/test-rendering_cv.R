@@ -21,20 +21,22 @@ test_that("Rendering to HTML works", {
   )
 
   # Knit the HTML version
-  html_knit_res <- rmarkdown::render(fs::path(temp_dir, "cv.rmd"),
-                                     params = list(pdf_mode = FALSE),
-                                     output_file = fs::path(temp_dir, "cv.html"),
-                                     quiet = TRUE)
+  html_knit_res <- rmarkdown::render(fs::path(temp_dir, "cv.Rmd"),
+    params = list(pdf_mode = FALSE),
+    output_file = fs::path(temp_dir, "cv.html"),
+    quiet = TRUE
+  )
 
   expect_true(fs::file_exists(html_knit_res))
 
   # Knit version for PDF
-  pdf_knit_res <-rmarkdown::render(fs::path(temp_dir, "cv.rmd"),
-                                   params = list(pdf_mode = TRUE),
-                                   output_file = fs::path(temp_dir, "cv_4_pdf.html"),
-                                   quiet = TRUE)
+  pdf_knit_res <- rmarkdown::render(fs::path(temp_dir, "cv.Rmd"),
+    params = list(pdf_mode = TRUE),
+    output_file = fs::path(temp_dir, "cv_4_pdf.html"),
+    quiet = TRUE
+  )
 
-  has_link_section <- function(html_text){
+  has_link_section <- function(html_text) {
     stringr::str_detect(
       html_text,
       stringr::fixed("<div id=\"links\" class=\"section level2\" data-icon=\"link\">

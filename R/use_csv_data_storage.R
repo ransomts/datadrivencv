@@ -23,9 +23,8 @@
 #' list.files(fs::path(temp_dir, "csv_data"))
 #'
 #' @export
-use_csv_data_storage <- function(folder_name = "data", create_output_dir = TRUE){
-
-  for(csv_file in c("entries.csv", "text_blocks.csv", "language_skills.csv","contact_info.csv" )){
+use_csv_data_storage <- function(folder_name = "data", create_output_dir = TRUE) {
+  for (csv_file in c("entries.csv", "text_blocks.csv", "language_skills.csv", "contact_info.csv")) {
     use_ddcv_template(
       file_name = csv_file,
       output_dir = folder_name,
